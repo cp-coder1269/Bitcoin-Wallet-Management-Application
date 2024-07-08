@@ -8,53 +8,64 @@ import Transaction from '../api/Transaction';
 
 
 
-const transactions = [
-  { id: 1, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
-  { id: 2, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
-  { id: 3, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
-  { id: 4, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
-  { id: 5, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
-  { id: 6, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
-  { id: 7, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
-  { id: 8, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
-  { id: 9, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
-  { id: 10, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
-  { id: 11, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
-  { id: 12, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
-  { id: 13, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
-  { id: 14, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
-  // Add more transactions as needed
-];
+// const transactions = [
+//   { id: 1, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
+//   { id: 2, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
+//   { id: 3, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
+//   { id: 4, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
+//   { id: 5, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
+//   { id: 6, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
+//   { id: 7, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
+//   { id: 8, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
+//   { id: 9, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
+//   { id: 10, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
+//   { id: 11, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
+//   { id: 12, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
+//   { id: 13, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
+//   { id: 14, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
+//   // Add more transactions as needed
+// ];
 const names = ['cpcoder'];
 
 const TransactionTable: React.FC = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-//   const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState([]);
 
-//   useEffect( () => {
-//     const fetchTransactions = async () => {
-//         const txnData = [];
-//         for (const [index, name] of names.entries()) {
-//           try {
-//             const addresses = await ImportWallet(name, 'mnemonic');
-//             console.log('Addresses:---', addresses);
-            
-//             // const balance = await WalletBalance(addresses) / 1000000000;
-//             for(const address of addresses){
-//                 const txn = await Transaction(address);
-//                 txnData.push({ id: index + 1, coin: txn?.time, wallet: name, amount: txn?.value, result: txn?.type, status: txn?.confirmed });
-//             }
-//           } catch (error) {
-//             console.error(`Error fetching wallet data for ${name}:`, error);
-//           }
-//         }
-//         setTransactions(txnData);
-//       };
-
-//       fetchTransactions();
-//   }, []);
+  useEffect( () => {
+    const fetchTransactions = async () => {
+        const txnData = [];
+        for (const [index, name] of names.entries()) {
+            console.log('Name:---', name);    
+          try {
+            const addresses = await ImportWallet(name, 'mnemonic');
+            // console.log('Addresses:--->', addresses);
+            // const balance = await WalletBalance(addresses) / 1000000000;
+            for(const address of addresses){
+                const txns = await Transaction(address);
+                // console.log('Transaction:--->', txns);
+                txns.forEach((txn) => {
+                    txnData.push({
+                        id: txnData.length + 1,
+                        coin: txn?.time,
+                        wallet: name,
+                        amount: txn?.value,
+                        result: txn?.type,
+                        status: txn?.confirmed ? 'Confirmed' : 'Unconfirmed'
+                      });
+                });      
+            }
+          } catch (error) {
+            console.error(`Error fetching wallet data for ${name}:`, error);
+          }
+        }
+        setTransactions(txnData);
+        return txnData;
+      };
+      fetchTransactions();
+    //   console.log('Transactions State:--->', transactions);
+  }, []);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
