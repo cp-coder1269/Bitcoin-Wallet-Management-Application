@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination
 } from '@mui/material';
-import ImportWallet from '../api/ImportWalltet';
 import Transaction from '../api/Transaction';
+import { useSelector} from 'react-redux';
 
 
 
@@ -30,42 +30,40 @@ const names = ['cpcoder'];
 const TransactionTable: React.FC = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
   const [transactions, setTransactions] = useState([]);
+  const wallets = useSelector(state => state.wallet);
 
   useEffect( () => {
     const fetchTransactions = async () => {
         const txnData = [];
-        for (const [index, name] of names.entries()) {
-            console.log('Name:---', name);    
+        for (const wallet of wallets) {
+            // console.log('State Variable:---', wallet.walletName, wallet.addresses);    
           try {
-            const addresses = await ImportWallet(name, 'mnemonic');
-            // console.log('Addresses:--->', addresses);
-            // const balance = await WalletBalance(addresses) / 1000000000;
+            const addresses = wallet.addresses;
             for(const address of addresses){
                 const txns = await Transaction(address);
                 // console.log('Transaction:--->', txns);
                 txns.forEach((txn) => {
                     txnData.push({
                         id: txnData.length + 1,
-                        coin: txn?.time,
-                        wallet: name,
-                        amount: txn?.value,
-                        result: txn?.type,
-                        status: txn?.confirmed ? 'Confirmed' : 'Unconfirmed'
+                        coin: txn?.coin,
+                        wallet: wallet?.walletName,
+                        amount: txn?.amount,
+                        result: txn?.result,
+                        status: txn?.status
                       });
                 });      
             }
           } catch (error) {
-            console.error(`Error fetching wallet data for ${name}:`, error);
+            console.error(`Error fetching wallet data for ${wallet.walletName}:`, error);
           }
         }
         setTransactions(txnData);
-        return txnData;
+        // console.log('Transactions:--->', txnData);
+        // console.log('Transactions State:--->', transactions);
       };
       fetchTransactions();
-    //   console.log('Transactions State:--->', transactions);
-  }, []);
+  }, [wallets]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);

@@ -17,28 +17,27 @@ const Transaction = async (address) => {
   try {
     const response = await axios.request(config);
     const transactions = [];
-
     response.data.txs.forEach(tx => {
       tx.inputs.forEach(input => {
         transactions.push({
-          time: tx.received,
-          value: input.output_value,
-          type: 'Received',
-          confirmed: tx.confirmations > 0
+          coin: tx.received,
+          amount: input.output_value,
+          result: 'Received',
+          status: tx.confirmations > 0 ? 'Confirmed' : 'Unconfirmed'
         });
       });
 
       tx.outputs.forEach(output => {
         transactions.push({
-          time: tx.received,
-          value: output.value,
-          type: 'Sent',
-          confirmed: tx.confirmations > 0
+          coin: tx.received,
+          amount: output.value,
+          result: 'Sent',
+          status: tx.confirmations > 0 ? 'Confirmed' : 'Unconfirmed'
         });
       });
     });
 
-    console.log('Formatted transactions:', transactions);
+    // console.log('Formatted transactions:', transactions);
     return transactions; // Return the formatted transactions array
   } catch (error) {
     console.error('Error fetching transactions:', error);

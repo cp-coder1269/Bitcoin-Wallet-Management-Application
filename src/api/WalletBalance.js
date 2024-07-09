@@ -1,7 +1,10 @@
 // @ts-nocheck
 // const axios = require('axios');
 import axios from 'axios';
-const TOKEN = '8e9b1ad42cba42eea4364ebe6c565a6f';
+
+const TOKEN = '0595fd6003fd443d9d9e0fe3ccfa40b4';
+// const TOKEN = '8e9b1ad42cba42eea4364ebe6c565a6f';
+
 
 // takes [addresses] of a wallet and return their balance combined
 const WalletBalance = async (addresses) => {

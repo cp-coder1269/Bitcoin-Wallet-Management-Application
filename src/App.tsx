@@ -30,6 +30,7 @@ const App: React.FC = () => {
         {selectedSidebarItem==='wallets' ? (<Box width="85%" p={3} display="flex" flexDirection="column">
           <Box alignSelf="flex-end" mb={2}>
             <Button
+              style={{textTransform: 'none'}}
               variant="contained"
               color="primary"
               startIcon={<WalletIcon />}

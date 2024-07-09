@@ -1,11 +1,12 @@
+// @ts-nocheck
 import React, { FormEvent, useState } from 'react';
 import {
   Dialog, DialogTitle, DialogContent, DialogActions,
   Button, TextField, IconButton, Typography
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import ImportWallet from '../api/ImportWalltet';
-import WalletBalance from '../api/WalletBalance';
+import { importWallet } from '../store/walletSlice';
+import {  useDispatch } from 'react-redux';
 
 interface ImportWalletDialogProps {
   open: boolean;
@@ -15,44 +16,28 @@ interface ImportWalletDialogProps {
 const ImportWalletDialog: React.FC<ImportWalletDialogProps> = ({ open, onClose }) => {
   const [walletName, setWalletName] = useState<string>('');
   const [mnemonic, setMnemonic] = useState<string>('');
-  const [walletAddresses, setWalletAddresses] = useState<Map<string, string[]>>();
+  const dispatch = useDispatch();
 
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
+    const handleSubmit = async (event: FormEvent) => {
+      event.preventDefault();
 
-    // Check if required fields are filled
-    if (!walletName) {
-      console.log('Wallet name is required.');
-      return;
-    }
+      // Check if required fields are filled
+      if (!walletName) {
+        console.log('Wallet name is required.');
+        return;
+      }
 
-    console.log('Wallet Name:', walletName);
-    console.log('Mnemonic:', mnemonic);
+      // console.log('Wallet Name:', walletName);
+      // console.log('Mnemonic:', mnemonic);
 
-    try {
-      const result = await ImportWallet(walletName, mnemonic);
-      // if (result) {
-      //   console.log("Formatted Import Wallet Result:", result);
-      //   const addresses = result.mapWalletData(walletName);
-      //   setWalletAddresses.set({walletName, addresses});
-      //   if (addresses) {
-      //     WalletBalance(addresses).then(balance => {
-      //       console.log('Total Balance:', balance);
-      //       return balance;
-      //     }).catch(error => {
-      //       console.log('Error fetching wallet balance:', error);
-      //     });
-      //   } else {
-      //     console.log('No addresses found for wallet name:', walletName);
-      //   }
-      // } else {
-      //   console.log('Failed to import wallet.');
+      // try {
+      //   const addresses = await ImportWallet(walletName, mnemonic);
+      //   dispatch({ type: 'importWallet', payload: {walletName, addresses} });
+      // } catch (error) {
+      //   console.error('Error importing wallet:', error);
       // }
-    } catch (error) {
-      console.error('Error importing wallet:', error);
-    }
-
-    resetAll();
+      dispatch(importWallet({ walletName, mnemonic }));
+      resetAll();
   };
 
   const resetAll = () => {
@@ -118,7 +103,7 @@ const ImportWalletDialog: React.FC<ImportWalletDialogProps> = ({ open, onClose }
         />
       </DialogContent>
       <DialogActions style={{ justifyContent: 'center' }}>
-        <Button color="primary" variant="contained" onClick={handleSubmit} disabled={!walletName}>
+        <Button color="primary" variant="contained" style={{textTransform: 'none'}} onClick={handleSubmit} disabled={!walletName}>
           Submit
         </Button>
       </DialogActions>
