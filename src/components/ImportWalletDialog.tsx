@@ -20,22 +20,10 @@ const ImportWalletDialog: React.FC<ImportWalletDialogProps> = ({ open, onClose }
 
     const handleSubmit = async (event: FormEvent) => {
       event.preventDefault();
-
-      // Check if required fields are filled
       if (!walletName) {
         console.log('Wallet name is required.');
         return;
       }
-
-      // console.log('Wallet Name:', walletName);
-      // console.log('Mnemonic:', mnemonic);
-
-      // try {
-      //   const addresses = await ImportWallet(walletName, mnemonic);
-      //   dispatch({ type: 'importWallet', payload: {walletName, addresses} });
-      // } catch (error) {
-      //   console.error('Error importing wallet:', error);
-      // }
       dispatch(importWallet({ walletName, mnemonic }));
       resetAll();
   };
@@ -58,6 +46,8 @@ const ImportWalletDialog: React.FC<ImportWalletDialogProps> = ({ open, onClose }
           marginLeft: 278,
           textAlign: 'center',  // Center dialog content
           padding: 20,  // Add padding for spacing
+          backgroundColor: '#1A1F26',
+          color:'white'
         }
       }}
     >
@@ -87,6 +77,12 @@ const ImportWalletDialog: React.FC<ImportWalletDialogProps> = ({ open, onClose }
           type="text"
           fullWidth
           variant="outlined"
+          InputLabelProps={{
+            style: { color: 'white' }
+          }}
+          InputProps={{
+            style: { color: 'white' }
+          }}
           value={walletName}
           onChange={(e) => setWalletName(e.target.value)}
         />
@@ -98,12 +94,18 @@ const ImportWalletDialog: React.FC<ImportWalletDialogProps> = ({ open, onClose }
           rows={3}
           fullWidth
           variant="outlined"
+          InputLabelProps={{
+            style: { color: 'white' }
+          }}
+          InputProps={{
+            style: { color: 'white' }
+          }}
           value={mnemonic}
           onChange={(e) => setMnemonic(e.target.value)}
         />
       </DialogContent>
       <DialogActions style={{ justifyContent: 'center' }}>
-        <Button color="primary" variant="contained" style={{textTransform: 'none'}} onClick={handleSubmit} disabled={!walletName}>
+        <Button color="primary" variant="contained" style={{textTransform: 'none', backgroundColor:'#E0B36A'}} onClick={handleSubmit} disabled={!walletName}>
           Submit
         </Button>
       </DialogActions>

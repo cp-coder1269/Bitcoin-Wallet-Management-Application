@@ -2,8 +2,7 @@
 // const axios = require('axios');
 import axios from 'axios';
 
-const TOKEN = '0595fd6003fd443d9d9e0fe3ccfa40b4';
-// const TOKEN = '8e9b1ad42cba42eea4364ebe6c565a6f';
+const TOKEN = process.env.REACT_APP_API_TOKEN;
 
 
 // takes [addresses] of a wallet and return their balance combined

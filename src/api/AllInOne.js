@@ -3,6 +3,8 @@ const axios = require('axios');
 const Transaction = require('./Transaction');
 const WalletBalance = require('./WalletBalance');
 
+const TOKEN = process.env.REACT_APP_API_TOKEN;
+
 const mapWalletData = (data) => {
   if (data == null) return null;
   return data.chains.flatMap(chain => chain.chain_addresses.map(addr => addr.address));
@@ -12,7 +14,7 @@ const getWallet = async (name) => {
   let config = {
     method: 'get',
     maxBodyLength: Infinity,
-    url: `https://api.blockcypher.com/v1/btc/main/wallets/hd/${name}?token=0595fd6003fd443d9d9e0fe3ccfa40b4`,
+    url: `https://api.blockcypher.com/v1/btc/main/wallets/hd/${name}?token=${TOKEN}`,
     headers: {}
   };
 

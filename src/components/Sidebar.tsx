@@ -19,17 +19,17 @@ const Sidebar: React.FC<SidebarProps> = ({selectedSidebarItem, setSelectedSideba
     <div>
       <List>
         <ListItem
-          style={{ backgroundColor: selectedSidebarItem === 'wallets' ? '#C78D4E' : 'inherit' }}
+          style={{ color: selectedSidebarItem === 'wallets' ? '#C78D4E' : 'inherit' }}
           onClick={() => handleItemClick('wallets')}
         >
-          <ListItemIcon><WalletIcon /></ListItemIcon>
+          <ListItemIcon><WalletIcon style={{ color: selectedSidebarItem === 'wallets' ? '#C78D4E' : 'inherit' }} /></ListItemIcon>
           <ListItemText primary="Wallets" />
         </ListItem>
         <ListItem
-          style={{ backgroundColor: selectedSidebarItem === 'transactions' ? '#C78D4E' : 'inherit' }}
+          style={{ color: selectedSidebarItem === 'transactions' ? '#C78D4E' : 'inherit' }}
           onClick={() => handleItemClick('transactions')}
         >
-          <ListItemIcon><SyncAltIcon/></ListItemIcon>
+          <ListItemIcon><SyncAltIcon style={{ color: selectedSidebarItem === 'wallets' ? '#C78D4E' : 'inherit' }} /></ListItemIcon>
           <ListItemText primary="Transactions" />
         </ListItem>
       </List> 

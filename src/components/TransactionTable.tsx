@@ -2,121 +2,105 @@
 import React, { useEffect, useState } from 'react';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination
-} from '@mui/material';
+,Typography} from '@mui/material';
 import Transaction from '../api/Transaction';
-import { useSelector} from 'react-redux';
+import { useSelector,useDispatch} from 'react-redux';
+import { fetchTransactions } from '../store/walletSlice';
 
-
-
-// const transactions = [
-//   { id: 1, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
-//   { id: 2, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
-//   { id: 3, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
-//   { id: 4, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
-//   { id: 5, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
-//   { id: 6, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
-//   { id: 7, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
-//   { id: 8, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
-//   { id: 9, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
-//   { id: 10, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
-//   { id: 11, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
-//   { id: 12, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
-//   { id: 13, coin: '2023-07-01', amount: 0.5, status: 'Completed' },
-//   { id: 14, coin: '2023-07-02', amount: 1.2, status: 'Pending' },
-//   // Add more transactions as needed
-// ];
-const names = ['cpcoder'];
 
 const TransactionTable: React.FC = () => {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [transactions, setTransactions] = useState([]);
+//   const [transactions, setTransactions] = useState([]);
+//   const wallets = useSelector(state => state.wallet);
+
+//   useEffect( () => {
+//     const fetchTransactions = async () => {
+//         const txnData = [];
+//         for (const wallet of wallets) {
+//             // console.log('State Variable:---', wallet.walletName, wallet.addresses);    
+//           try {
+//             const addresses = wallet.addresses;
+//             for(const address of addresses){
+//                 const txns = await Transaction(address);
+//                 txns.forEach((txn) => {
+//                     txnData.push({
+//                         id: txnData.length + 1,
+//                         coin: txn?.coin,
+//                         wallet: wallet?.walletName,
+//                         amount: txn?.amount,
+//                         result: txn?.result,
+//                         status: txn?.status
+//                       });
+//                 });      
+//             }
+//           } catch (error) {
+//             console.error(`Error fetching wallet data for ${wallet.walletName}:`, error);
+//           }
+//         }
+//         setTransactions(txnData);
+//         // console.log('Transactions:--->', txnData);
+//         // console.log('Transactions State:--->', transactions);
+//       };
+//       fetchTransactions();
+//   }, [wallets]);
+
+const dispatch = useDispatch();
   const wallets = useSelector(state => state.wallet);
+  console.log('txmnTable wallets:--->', wallets);
+  
 
-  useEffect( () => {
-    const fetchTransactions = async () => {
-        const txnData = [];
-        for (const wallet of wallets) {
-            // console.log('State Variable:---', wallet.walletName, wallet.addresses);    
-          try {
-            const addresses = wallet.addresses;
-            for(const address of addresses){
-                const txns = await Transaction(address);
-                // console.log('Transaction:--->', txns);
-                txns.forEach((txn) => {
-                    txnData.push({
-                        id: txnData.length + 1,
-                        coin: txn?.coin,
-                        wallet: wallet?.walletName,
-                        amount: txn?.amount,
-                        result: txn?.result,
-                        status: txn?.status
-                      });
-                });      
-            }
-          } catch (error) {
-            console.error(`Error fetching wallet data for ${wallet.walletName}:`, error);
-          }
-        }
-        setTransactions(txnData);
-        // console.log('Transactions:--->', txnData);
-        // console.log('Transactions State:--->', transactions);
-      };
-      fetchTransactions();
-  }, [wallets]);
+  useEffect(() => {
+    wallets.forEach(wallet => {
+      if (!wallet.transactions) {
+        dispatch(fetchTransactions({ walletName: wallet.walletName, addresses: wallet.addresses }));
+      }
+    });
+  }, [wallets, dispatch]);
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
+  const transactions = wallets.flatMap(wallet => 
+    (wallet.transactions || []).map(transaction => ({
+      ...transaction,
+      walletName: wallet.walletName
+    }))
+  );
+  
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, transactions.length - page * rowsPerPage);
 
   return (
-    <Paper>
+    <div style={{ height: 400, width: '100%' }}>
+    <Typography variant="h5" style={{color: '#C78D4E', fontFamily:'lato'}}>
+        Transactions
+    </Typography>
+    <br />
+    <Typography variant="subtitle1" gutterBottom>
+        Total Transactions - {transactions.length}
+    </Typography>
+    {transactions.length > 0 &&(<Paper>
       <TableContainer>
         <Table>
-          <TableHead>
+          <TableHead style={{ backgroundColor: '#252c35', color: '#ADABAA'}}>
             <TableRow>
-              <TableCell>Coin</TableCell>
-              <TableCell>Wallet</TableCell>
-              <TableCell>Amount</TableCell>
-              <TableCell>Result</TableCell>
-              <TableCell>Status</TableCell>
+            <TableCell style={{color: '#ADABAA'}}>Coin</TableCell>
+            <TableCell style={{color: '#ADABAA'}}>Wallet</TableCell>
+            <TableCell style={{color: '#ADABAA'}}>Amount</TableCell>
+            <TableCell style={{color: '#ADABAA'}}>Result</TableCell>
+            <TableCell style={{color: '#ADABAA'}}>Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {transactions.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(transaction => (
-              <TableRow key={transaction.id}>
-                <TableCell>{transaction.coin}</TableCell>
-                <TableCell>{transaction.wallet}</TableCell>
-                <TableCell>{transaction.amount}</TableCell>
-                <TableCell>{transaction.result}</TableCell>
-                <TableCell>{transaction.status}</TableCell>
+            {transactions.map((transaction, index) => (
+              <TableRow key={index+1} style={{backgroundColor: '#252c35', color:'#ADABAA', borderTop: '8px solid #1A1F26', borderBottom: '8px solid #1A1F26', width:'701px', height:'50px'}} >
+                <TableCell style={{color: '#ADABAA'}}>{transaction.coin}</TableCell>
+                <TableCell style={{color: '#ADABAA'}}>{transaction.walletName}</TableCell>
+                <TableCell style={{color: '#ADABAA'}}>{transaction.amount}</TableCell>
+                <TableCell style={{color: '#8484F1'}}>{transaction.result.toUpperCase()}</TableCell>
+                <TableCell style={{color: '#8484F1'}}>{transaction.status.toUpperCase()}</TableCell>
               </TableRow>
             ))}
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={4} />
-              </TableRow>
-            )}
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 15]}
-        component="div"
-        count={transactions.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
+    </Paper>)}
+    </div>
   );
 };
 

@@ -2,8 +2,7 @@
 import axios from 'axios';
 // const axios = require('axios');
 
-const TOKEN = '0595fd6003fd443d9d9e0fe3ccfa40b4';
-// const TOKEN = '8e9b1ad42cba42eea4364ebe6c565a6f';
+const TOKEN = process.env.REACT_APP_API_TOKEN;
 
 
 const Transaction = async (address) => {
@@ -23,7 +22,7 @@ const Transaction = async (address) => {
           coin: tx.received,
           amount: input.output_value,
           result: 'Received',
-          status: tx.confirmations > 0 ? 'Confirmed' : 'Unconfirmed'
+          status: tx.confirmations > 0 ? 'Success' : 'Unconfirmed'
         });
       });
 
@@ -32,7 +31,7 @@ const Transaction = async (address) => {
           coin: tx.received,
           amount: output.value,
           result: 'Sent',
-          status: tx.confirmations > 0 ? 'Confirmed' : 'Unconfirmed'
+          status: tx.confirmations > 0 ? 'Success' : 'Unconfirmed'
         });
       });
     });
