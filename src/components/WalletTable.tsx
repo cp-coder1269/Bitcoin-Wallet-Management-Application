@@ -10,7 +10,7 @@ import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 const WalletTable: React.FC = () => {
   const wallets = useSelector(state => state.wallet);
   const count = wallets.length;
-  console.log('Wallets:****--->', wallets);
+//   console.log('Wallets:****--->', wallets);
   
   const dispatch = useDispatch();
 
@@ -42,29 +42,28 @@ const WalletTable: React.FC = () => {
 
   return (
     <div>
-      <Typography variant="subtitle1" gutterBottom>
+      <Typography variant="subtitle1" gutterBottom style={{color: '#ADABAA'}}>
         Total Coins - {count}
       </Typography>
-      <br />
         {count > 0 && (<TableContainer component={Paper} >
         <Table>
-            <TableHead style={{ backgroundColor: '#252c35', color: 'white'}}>
+            <TableHead style={{ backgroundColor: '#252c35', color: '#ADABAA'}}>
             <TableRow>
-            <TableCell style={{color: 'white'}}>Coin</TableCell>
-            <TableCell style={{color: 'white'}}>Holding</TableCell>
-            <TableCell style={{color: 'white'}}>Action</TableCell>
+            <TableCell style={{color: '#ADABAA'}}>Coin</TableCell>
+            <TableCell style={{color: '#ADABAA'}}>Holding</TableCell>
+            <TableCell style={{color: '#ADABAA'}}>Action</TableCell>
             </TableRow>
             </TableHead>    
             <TableBody>
             {wallets.map((wallet, index) => (
-                <TableRow key={index + 1} style={{backgroundColor: '#252c35', color:'white', borderTop: '8px solid #1A1F26', borderBottom: '8px solid #1A1F26'}}>
+                <TableRow key={index + 1} style={{backgroundColor: '#252c35', color:'#ADABAA', borderTop: '16px solid #1A1F26'}}>
                 <TableCell>
-                    <div style={{ display: 'flex', alignItems: 'center', border:'none', color: 'white' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', border:'none', color: '#ADABAA' }}>
                     <CurrencyBitcoinIcon style={{ height: '30px',width: '30px', marginRight: '2px', fill: '#E0B36A', border:'circle', borderRadius: '50%', backgroundColor: '#383124'}} />
                     {wallet.walletName.toUpperCase()}
                     </div>
                 </TableCell>
-                <TableCell style={{color: 'white'}}>BTC {wallet.balance ? wallet.balance : 0}</TableCell>
+                <TableCell style={{color: '#ADABAA'}}>BTC {wallet.balance ? wallet.balance : 0}</TableCell>
                 <TableCell>
                     <IconButton style={{color: 'grey'}} aria-label="delete" onClick={() => handleDelete(wallet.walletName)}>
                     <DeleteIcon />

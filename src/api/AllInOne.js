@@ -24,7 +24,7 @@ const getWallet = async (name) => {
     return response.data;
   } catch (error) {
     // console.error(`Error retrieving wallet ${name}:`, error);
-    return null; // Return null explicitly for error cases
+    return null; 
   }
 };
 
@@ -47,7 +47,6 @@ const getWallet = async (name) => {
 
   // console.log('All wallet addresses maps:', walletAddressesMaps);
 
-  // Process balances and transactions
   const balances = [];
   const transactions = [];
 
@@ -55,7 +54,6 @@ const getWallet = async (name) => {
     const walletBalance = await WalletBalance(addresses);
     balances.push({ walletName, walletBalance });
 
-    // Process transactions for each address
     for (const address of addresses) {
       try {
         const addressTransactions = await Transaction(address);
@@ -65,8 +63,4 @@ const getWallet = async (name) => {
       }
     }
   }
-
-  // Log balances and transactions
-  console.log('Balances:', balances);
-  console.log('Transactions:', transactions);
 })();

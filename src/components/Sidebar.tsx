@@ -11,8 +11,6 @@ const Sidebar: React.FC<SidebarProps> = ({selectedSidebarItem, setSelectedSideba
 
   const handleItemClick = (item: string) => {
     setSelectedSidebarItem(item);
-    console.log(`Clicked on ${item}`);
-    // You can add logic here to show the corresponding table based on item clicked
   };
   
   return (
@@ -22,14 +20,14 @@ const Sidebar: React.FC<SidebarProps> = ({selectedSidebarItem, setSelectedSideba
           style={{ color: selectedSidebarItem === 'wallets' ? '#C78D4E' : 'inherit' }}
           onClick={() => handleItemClick('wallets')}
         >
-          <ListItemIcon><WalletIcon style={{ color: selectedSidebarItem === 'wallets' ? '#C78D4E' : 'inherit' }} /></ListItemIcon>
+          <ListItemIcon><WalletIcon style={{ color: selectedSidebarItem === 'wallets' ? '#C78D4E' : '#FFFFFF' }} /></ListItemIcon>
           <ListItemText primary="Wallets" />
         </ListItem>
         <ListItem
           style={{ color: selectedSidebarItem === 'transactions' ? '#C78D4E' : 'inherit' }}
           onClick={() => handleItemClick('transactions')}
         >
-          <ListItemIcon><SyncAltIcon style={{ color: selectedSidebarItem === 'wallets' ? '#C78D4E' : 'inherit' }} /></ListItemIcon>
+          <ListItemIcon><SyncAltIcon style={{ color: selectedSidebarItem === 'transactions' ? '#C78D4E' : '#FFFFFF' }} /></ListItemIcon>
           <ListItemText primary="Transactions" />
         </ListItem>
       </List> 

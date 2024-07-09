@@ -11,7 +11,6 @@ const WalletBalance = async (addresses) => {
   let balance = 0;
   let count = 0;
 
-  // Using Promise.all to wait for all async operations to complete
   const balancePromises = addresses.map(async (address) => {
     // console.log('calling for address:', address);
 
@@ -31,7 +30,6 @@ const WalletBalance = async (addresses) => {
     }
   });
 
-  // Wait for all balance checks to complete
   await Promise.all(balancePromises);
 
   // console.log('balance:', balance);

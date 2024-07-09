@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, CircularProgress } from '@mui/material';
 import DiamondIcon from '@mui/icons-material/Diamond';
 import SyncIcon from '@mui/icons-material/Sync';
 import { useSelector, useDispatch } from 'react-redux';
@@ -25,14 +25,19 @@ const Header: React.FC = () => {
   return (
     <AppBar position="static" style={{ backgroundColor: '#1A1F26', color: '#FFFFFF' }}>
       <Toolbar>
-        <Button color="inherit" style={{ textTransform: 'none' }} startIcon={<DiamondIcon />} onClick={() => { console.log('Button Pressed'); }}>
+        <Button color="inherit" style={{ textTransform: 'none' }} startIcon={<DiamondIcon />}>
           <Typography>cySync</Typography>
         </Button>
         <div style={{ flexGrow: 1 }}></div>
-        <div style={{color:'#E0B36A'}}>
-            <Button onClick={syncWallets} color="inherit" style={{ textTransform: 'none' }} endIcon={<SyncIcon />}>
+        <div style={{ color: '#E0B36A' }}>
+          <Button 
+            onClick={syncWallets} 
+            color="inherit" 
+            style={{ textTransform: 'none' }} 
+            endIcon={isSynced ? <SyncIcon /> : <CircularProgress size={18} color="inherit" />}
+          >
             {isSynced ? 'Synced' : 'Syncing...'}
-            </Button>
+          </Button>
         </div>
       </Toolbar>
     </AppBar>

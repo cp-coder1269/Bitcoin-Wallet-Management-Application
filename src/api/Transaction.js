@@ -22,7 +22,7 @@ const Transaction = async (address) => {
           coin: tx.received,
           amount: input.output_value,
           result: 'Received',
-          status: tx.confirmations > 0 ? 'Success' : 'Unconfirmed'
+          status: tx.confirmations > 0 ? 'Success' : 'Pending'
         });
       });
 
@@ -37,10 +37,10 @@ const Transaction = async (address) => {
     });
 
     // console.log('Formatted transactions:', transactions);
-    return transactions; // Return the formatted transactions array
+    return transactions; 
   } catch (error) {
     console.error('Error fetching transactions:', error);
-    throw error; // Throw the error to be caught by the caller
+    throw error; 
   }
 };
 
