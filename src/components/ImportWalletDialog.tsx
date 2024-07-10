@@ -142,7 +142,7 @@ const ImportWalletDialog: React.FC<ImportWalletDialogProps> = ({ open, onClose }
             color: '#FFFFFF',
             width: '86px',
             height: '31.96px',
-            borderRadius: '4px 0px 0px 0px',
+            borderRadius: '4px 4px 4px 4px',
             fontFamily: 'Lato',
             fontSize: '14px',
             fontWeight: 700,

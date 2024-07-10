@@ -1,46 +1,54 @@
-# Getting Started with Create React App
+# React Cypherock web App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Getting Started
 
-## Available Scripts
+### Prerequisites
 
-In the project directory, you can run:
+- Ensure you have Node.js installed.
+- Obtain an API token from Blockcypher at [Blockcypher](https://www.blockcypher.com/).
 
-### `npm start`
+### Installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Clone the repository:
+   ```bash
+   git clone <repository_url>
+   cd <repository_name>
+   ```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+2. Install all dependencies:
+   ```bash
+   npm install
+   ```
 
-### `npm test`
+### Running the Application
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Start the development server:
+   ```bash
+   npm start
+   ```
 
-### `npm run build`
+## Usage
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Generating an API Token and Creating an HD Wallet
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Visit [Blockcypher](https://www.blockcypher.com/) and generate an API token.
+2. Create a Hierarchical Deterministic (HD) wallet using the token.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Using the App
 
-### `npm run eject`
+1. **Import Wallet**:
+   - Click on the "Import Wallet" button.
+   - Submit the necessary information to add the wallet. The wallet will be displayed in the wallet table with a balance of 0 initially.
+   
+2. **Fetch Balance**:
+   - Fetch the wallet balance by clicking the refresh icon or the sync button.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+3. **View Transactions**:
+   - The transaction table will display transactions corresponding to each address of all wallets.
+   - Transactions are fetched in the background to enhance user experience without blocking the UI.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Features
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Wallet Table**: Displays all imported wallets.
+- **Transaction Table**: Displays transactions for each wallet address.
+- **Background Syncing**: Improves user experience by syncing data in the background without blocking the UI.
