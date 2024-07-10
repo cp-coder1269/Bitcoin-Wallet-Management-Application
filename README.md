@@ -38,12 +38,13 @@
 
 1. **Import Wallet**:
    - Click on the "Import Wallet" button.
-   - Submit the necessary information to add the wallet. The wallet will be displayed in the wallet table with a balance of 0 initially.
-   
-2. **Fetch Balance**:
-   - Fetch the wallet balance by clicking the refresh icon or the sync button.
+   - Submit the necessary information to add the wallet. The wallet will be displayed in the wallet table with balance.
+   - Press refresh icon to reload the balance.
+   - Press delete icon to delete a wallet.
 
-3. **View Transactions**:
+
+
+2. **View Transactions**:
    - The transaction table will display transactions corresponding to each address of all wallets.
    - Transactions are fetched in the background to enhance user experience without blocking the UI.
 
