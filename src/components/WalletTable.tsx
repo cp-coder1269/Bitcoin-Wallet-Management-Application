@@ -21,13 +21,13 @@ const WalletTable: React.FC = () => {
 //     });
 //   }, [dispatch]);
 
-  useEffect(() => {
-    wallets.forEach(wallet => {
-    if(wallet.addresses.length <= 0){
-      dispatch(fetchBalance({ walletName: wallet.walletName, addresses: wallet.addresses }));
-    }
-    });
-  }, [wallets, dispatch]);
+//   useEffect(() => {
+//     wallets.forEach(wallet => {
+//     if(wallet.addresses.length <= 0){
+//       dispatch(fetchBalance({ walletName: wallet.walletName, addresses: wallet.addresses }));
+//     }
+//     });
+//   }, [wallets, dispatch]);
 
   const handleDelete = (walletName) => {
     dispatch(deleteWallet({ walletName }));

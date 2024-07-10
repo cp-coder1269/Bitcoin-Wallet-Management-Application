@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import ImportWallet from '../api/ImportWalltet'
+import ImportWallet from '../api/ImportWalltet';
 import WalletBalance from '../api/WalletBalance';
 import Transaction from '../api/Transaction';
 
@@ -37,10 +37,12 @@ interface Transaction {
 
 export const importWallet = createAsyncThunk(
   'wallet/importWallet',
-  async ({ walletName, mnemonic }: ImportWalletPayload, { rejectWithValue }) => {
+  async ({ walletName, mnemonic }: ImportWalletPayload, { dispatch, rejectWithValue }) => {
     try {
       const addresses = await ImportWallet(walletName, mnemonic);
-      return { walletName, addresses };
+      // Fetch balance after importing the wallet
+      const balance = await WalletBalance(addresses);
+      return { walletName, addresses, balance };
     } catch (error: any) {
       if (!error.response) {
         throw error;
@@ -92,12 +94,13 @@ const walletSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(importWallet.fulfilled, (state, action: PayloadAction<{ walletName: string; addresses: string[] }>) => {
+      .addCase(importWallet.fulfilled, (state, action: PayloadAction<{ walletName: string; addresses: string[]; balance: number }>) => {
         const wallet = state.find(wallet => wallet.walletName === action.payload.walletName);
         if (wallet) {
           wallet.addresses = action.payload.addresses;
+          wallet.balance = action.payload.balance;
         } else {
-          state.push({ walletName: action.payload.walletName, addresses: action.payload.addresses });
+          state.push({ walletName: action.payload.walletName, addresses: action.payload.addresses, balance: action.payload.balance });
         }
       })
       .addCase(importWallet.rejected, (state, action) => {
