@@ -11,8 +11,8 @@
 
 1. Clone the repository:
    ```bash
-   git clone <repository_url>
-   cd <repository_name>
+   git clone https://github.com/cp-coder1269/cypherock-web.git
+   cd cypherock-web
    ```
 
 2. Install all dependencies:
