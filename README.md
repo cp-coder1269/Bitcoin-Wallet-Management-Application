@@ -1,4 +1,4 @@
-# React Cypherock web App
+# Bitcoin Wallet Management Application
 
 ## Getting Started
 
