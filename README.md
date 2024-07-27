@@ -11,8 +11,8 @@
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/cp-coder1269/cypherock-web.git
-   cd cypherock-web
+   git clone https://github.com/cp-coder1269/Bitcoin-Wallet-Management-Application.git
+   cd Bitcoin-Wallet-Management-Application
    ```
 
 2. Install all dependencies:
